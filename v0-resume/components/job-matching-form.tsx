@@ -110,9 +110,10 @@ export function JobMatchingForm() {
             max="20"
             value={topN}
             onChange={(e) => {
-              const value = parseInt(e.target.value)
-              if (value >= 1 && value <= 20) {
-                setTopN(e.target.value)
+              const value = e.target.value;
+              const numValue = parseInt(value);
+              if (value === "" || (numValue >= 1 && numValue <= 20)) {
+                setTopN(value);
               }
             }}
             className="w-24"

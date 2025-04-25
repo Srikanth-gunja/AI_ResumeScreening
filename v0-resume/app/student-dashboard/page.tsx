@@ -30,11 +30,10 @@ export default function StudentDashboard() {
     async function fetchResumeData() {
       try {
         const data = await apiService.getUserResume()
-        if (data) {
-          setResumeData(data)
-        }
+        setResumeData(data)
       } catch (error) {
         console.error("Error fetching resume data:", error)
+        setResumeData(null)
       } finally {
         setLoading(false)
       }

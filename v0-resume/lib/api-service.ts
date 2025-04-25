@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -119,8 +119,17 @@ export const apiService = {
 
   // Resume Management
   getUserResume: async () => {
-    const response = await api.get('/resume/user');
-    return response.data;
+    try {
+      const response = await api.get('/resume/user');
+      return response.data;
+    } catch (error: any) {
+      // If the error is 404 (not found), return null to indicate no resume exists
+      if (error.response && error.response.status === 404) {
+        return null;
+      }
+      // For other errors, rethrow them
+      throw error;
+    }
   },
 
   getResumesByCollegeCode: async (collegeCode: string) => {
